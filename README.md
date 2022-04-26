@@ -8,8 +8,8 @@
 </br>
 
 ## :pushpin: Contact
-- 이메일: warscodev@gmail.com
-- 깃헙: https://github.com/warscodev
+- 이메일 : warscodev@gmail.com
+- 깃헙 : https://github.com/warscodev
 
 </br>
 
@@ -17,7 +17,7 @@
 ### [쿼트위키](https://quot.wiki)
 >화제의 발언, 어록 모음 서비스
 >
->개발 기간 : 2021. 5 ~ 진행중
+>개발 기간 : 2021.05 ~ 진행중
 >  
 >기술 스택 :  
 >Java 11 / Spring Boot / Gradle / Spring Data JPA / QueryDSL  

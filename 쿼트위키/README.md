@@ -54,9 +54,7 @@
 - 이용자는 특정 인물을 선택 한 뒤 해당 인물의 발언을 등록할 수 있습니다. 인물이 아직 등록되어 있지 않은 경우에는 인물 등록을 먼저 해야하며 발언을 등록할 때 해당 발언의 일자, 출처 URL, 내용, 관련 태그를 반드시 입력해야합니다. 이는 유효성 검사를 통해 검증되고 조건에 충족하지 않는 경우 메시지를 띄우고 등록이 진행되지 않습니다.
 
   > - **관련 클래스**
-  >
   >   - Remark (Domain Class) :pushpin: [코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/Remark.java)
-  >
   >   - RemarkRepository (JPA Interface)
   >   - RemarkApiController :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/web/controller/remark/RemarkApiController.java)
   >   - RemarkService :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/service/remark/RemarkService.java)
@@ -74,13 +72,9 @@
 - 사이트 헤더에 구현된 검색창을 통해 사이트 어디서든 검색하여 원하는 발언 또는 인물을 검색할 수 있습니다.
 
   > - **관련 클래스**
-  >
   >   - RemarkContorller
   >   - RemarkService
-  >
   >   - RemarkRepositoryImpl (QueryDSL Implements Class) :pushpin: [코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/repository/RemarkRepositoryImpl.java)
-  >
-  >
   >   - RemarkApiQueryRepository :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/repository/RemarkApiQueryRepository.java)
 
 
@@ -161,11 +155,8 @@
   > - **관련 클래스**
   >   - WebSecurityConfig :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/WebSecurityConfig.java)
   >   - CustomOAuth2UserService (OAuth2UserService Implements Class) :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/CustomOAuth2UserService.java)
-  >
   >   - CustomAccessDeniedHandler:pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/handler/CustomAccessDeniedHandler.java)
-  >
   >   - CustomLoginSuccessHandler
-  >
   >   - CustomLogoutSuccessHandler
 
 

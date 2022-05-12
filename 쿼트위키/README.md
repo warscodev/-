@@ -1,4 +1,5 @@
 # :pushpin: 쿼트위키(quot.wiki)
+
 >**사회적으로 널리 알려진 사람들의 발언 중에서 보존할만한 가치가 있는 말을 등록, 수정, 삭제 할 수 있는 위키입니다.**
 >
 >https://quot.wiki  또는 구글 '쿼트위키' 검색
@@ -8,6 +9,7 @@
 
 
 ## 1. 제작 기간 & 참여 인원
+
 - 2021년 5월 ~ 현재
 - 2인 팀 프로젝트이며 자바&스프링 프레임워크 기반의 풀 스택 웹 개발 업무를 총괄 담당하였고 <br>
   전반적인 콘텐츠, 디자인 기획은 팀원과 공동으로 진행했습니다.
@@ -17,7 +19,9 @@
 
 
 ## 2. 사용 기술
+
 #### `Back-end`
+
   - Java 11
   - Spring Boot, Spring Data JPA, Spring Security, Spring Oauth 2.0 Client 2.4.4
   - QueryDSL 4.4
@@ -32,6 +36,7 @@
 - Nginx
 
 #### `Front-end`
+
   - Javascript
   - HTML5, CSS, Bootstrap5
   - Thymeleaf
@@ -103,13 +108,13 @@
 ### 4.4. 인물 분류 페이지
 
 - 카테고리별 대분류 및 초성별 소분류를 통해 사이트에 등록된 인물들의 통계 정보를 제공하고 <br>개별 인물 페이지로 이동할 수 있는 인덱스의 역할을 합니다.
-  
+
   > - **관련 클래스**
   >   - PersonController
   >   - PersonService
   >   - PersonRepositoryImpl
   >   - GetChoSungFromNames :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/person/utils/GetChoSungFromNames.java)
-  
+
   
 
 <br>
@@ -176,13 +181,12 @@
 - Github Actions은 CodeDeploy에게 S3로 전달된 Jar 파일을 이용한 배포를 요청합니다.
 
 - EC2 인스턴스 내부에 있는 CodeDeploy Agent가 S3로부터 Jar 파일을 전달받아 배포를 진행합니다.
-	- 현재 Nginx와 연결되지 않은 포트의 스프링부트로 배포합니다.
+  - 현재 Nginx와 연결되지 않은 포트의 스프링부트로 배포합니다.
 
 
--  배포와 헬스 체크가 완료되면 Nginx reload를 통해 Nginx를 새로 배포된 스프링 부트의 포트로 연결합니다.
-	
-	
-	
+- 배포와 헬스 체크가 완료되면 Nginx reload를 통해 Nginx를 새로 배포된 스프링 부트의 포트로 연결합니다.
+
+  
 
 </br>
 
@@ -192,6 +196,7 @@
 <summary> JSON: Infinite recursion</summary>
 <div markdown="1">
 
+
 - 서로 양방향 참조를 하고 있는 Remark Entity, Person Entity 중 Remark Entity를  JSON으로 반환하는 과정에서 Person Entity가 다시 Remark Entity를 불러오는 무한 순환 참조 문제가 발생.
 - 양 Entity에 각각 @JsonManagedReference, @JsonBackReference을 붙여서 순환 참조를 방어할 수도 있으나 Entity 자체를 반환하기보다는 dto 객체를 만들어 필요한 필드들만 추출해 반환하여 해결하였습니다.
 
@@ -199,5 +204,4 @@
 </details>  
     
 </br>
-
 

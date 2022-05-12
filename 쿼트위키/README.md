@@ -175,7 +175,7 @@
 
 ### 4.7. 무중단 배포
 
- <img src='https://raw.githubusercontent.com/warscodev/portfolio/f480ac6dd858f414db18c9d4877d94fabf392c1e/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A5%E1%86%BC.svg?token=AKK3GOSMDSDCESOR4L2SJG3CPTRX6' width='800px'>
+ <img src='https://github.com/warscodev/portfolio/blob/main/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A5%E1%86%BC.png?raw=true' width='800px'>
 
 - Github 마스터 브런치에서 푸시가 발생하면 Github Actions에서 프로젝트 빌드 후, Jar 파일로 압축하여 S3로 업로드 합니다.
 - Github Actions은 CodeDeploy에게 S3로 전달된 Jar 파일을 이용한 배포를 요청합니다.

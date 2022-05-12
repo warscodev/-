@@ -1,15 +1,20 @@
-# :pushpin: 쿼트위키
->**다양한 인물들의 발언, 어록 모음 서비스**
+# :pushpin: 쿼트위키(quot.wiki)
+>**사회적으로 널리 알려진 사람들의 발언 중에서 보존할만한 가치가 있는 말을 등록, 수정, 삭제 할 수 있는 위키입니다.**
 >
 >https://quot.wiki  또는 구글 '쿼트위키' 검색
 
 </br>
 
+
+
 ## 1. 제작 기간 & 참여 인원
-- 2021년 5월 ~ 
-- 2인 팀 프로젝트 (개발 담당)
+- 2021년 5월 ~ 현재
+- 2인 팀 프로젝트이며 자바&스프링 프레임워크 기반의 풀 스택 웹 개발 업무를 총괄 담당했고,
+  전반적인 컨텐츠, 디자인 기획은 팀원과 공동으로 진행했습니다.
 
 </br>
+
+
 
 ## 2. 사용 기술
 #### `Back-end`
@@ -19,7 +24,6 @@
   - Gradle 6.8
   - H2 1.4.200
 
-    
 #### `DevOps`
 
 - MariaDB 2.7
@@ -27,14 +31,10 @@
 - Github Actions
 - Nginx
 
-
-
 #### `Front-end`
   - Javascript
   - HTML5, CSS, Bootstrap5
   - Thymeleaf
-
-
 
 </br>
 
@@ -44,197 +44,147 @@
 
 ![](https://github.com/warscodev/portfolio/blob/main/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/erd.png?raw=true)
 
-## 4. 핵심 기능
-이 서비스의 핵심 기능은 컨텐츠 등록 기능입니다. 
-사용자는 단지 컨텐츠의 카테고리를 선택하고, URL만 입력하면 끝입니다. 
-이 단순한 기능의 흐름을 보면, 서비스가 어떻게 동작하는지 알 수 있습니다. 
+## 4. 주요 기능
 
 <details>
-<summary><b>핵심 기능 설명 펼치기</b></summary>
+<summary><b>펼치기</b></summary>
 <div markdown="1">
 
-### 4.1. 전체 흐름
+### 4.1. 발언 등록
+
+- 이용자는 특정 인물을 선택 한 뒤 해당 인물의 발언을 등록할 수 있습니다. 인물이 아직 등록되어 있지 않은 경우에는 인물 등록을 먼저 해야하며 발언을 등록할 때 해당 발언의 일자, 출처 URL, 내용, 관련 태그를 반드시 입력해야합니다. 이는 유효성 검사를 통해 검증되고 조건에 충족하지 않는 경우 메시지를 띄우고 등록이 진행되지 않습니다.
+
+  > - **관련 클래스**
+  >
+  >   - Remark (Domain Class) :pushpin: [코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/Remark.java)
+  >
+  >   - RemarkRepository (JPA Interface)
+  >   - RemarkApiController :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/web/controller/remark/RemarkApiController.java)
+  >   - RemarkService :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/service/remark/RemarkService.java)
+
+  
+
+### 4.2. 발언 목록 및 검색
+
+- 일반 게시판과 피드 방식의 중간 형태로 구현한 발언 목록 페이지에서 카테고리별 발언 보기, 페이지 이동, 좋아요/싫어요, 발언 스크랩이 가능합니다.
+
+- Rest Api 방식으로 사이드에 화제 발언 탭을 구현하여 최근 일주일간 좋아요, 싫어요, 댓글이 가장 많이 달린 순으로 정렬했습니다.
+
+- 사이트 헤더에 구현된 검색창을 통해 사이트 어디서든 검색하여 원하는 발언 또는 인물을 검색할 수 있습니다.
+
+  > - **관련 클래스**
+  >
+  >   - RemarkContorller
+  >   - RemarkService
+  >
+  >   - RemarkRepositoryImpl (QueryDSL Implements Class) :pushpin: [코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/repository/RemarkRepositoryImpl.java)
+  >
+  >
+  >   - RemarkApiQueryRepository :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/repository/RemarkApiQueryRepository.java)
 
 
-### 4.2. 사용자 요청
+
+### 4.3. 댓글
+
+- 개별 발언 페이지에서 로그인 한 회원은 발언에 대한 좋아요/싫어요, 스크랩을 할 수 있고 댓글을 작성할 수 있습니다.
+
+- 댓글에 대한 대댓글을 작성할 수 있고 댓글을 신고할 수 있습니다. 신고된 댓글은 원 내용과 함께 DB에 저장됩니다.
+
+  > - 관련 클래스
+  >   - Comment, Reporting (Domain Class)
+  >   - CommentApiController :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/web/controller/remark/CommentApiController.java)
+  >   - CommentService :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/service/remark/comment/CommentService.java)
+  >   - CommentRepositoryImpl :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/comment/repository/CommentRepositoryImpl.java)
 
 
-- **URL 정규식 체크** :pushpin: [코드 확인](https://github.com/Integerous/goQuality/blob/b587bbff4dce02e3bec4f4787151a9b6fa326319/frontend/src/components/PostInput.vue#L67)
-  - Vue.js로 렌더링된 화면단에서, 사용자가 등록을 시도한 URL의 모양새를 정규식으로 확인합니다.
-  - URL의 모양새가 아닌 경우, 에러 메세지를 띄웁니다.
 
-- **Axios 비동기 요청** :pushpin: [코드 확인]()
-  - URL의 모양새인 경우, 컨텐츠를 등록하는 POST 요청을 비동기로 날립니다.
+### 4.4. 인물 분류 페이지
+
+- 카테고리별 대분류 및 초성별 소분류를 통해 사이트에 등록된 인물들의 통계 정보를 제공하고 <br>개별 인물 페이지로 이동 할 수 있는 인덱스의 역할을 합니다.
+  
+  > - **관련 클래스**
+  >   - PersonController
+  >   - PersonService
+  >   - PersonRepositoryImpl
+  >   - GetChoSungFromNames :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/person/utils/GetChoSungFromNames.java)
+  
+  
+### 4.5. 인물 상세 페이지
+
+- 인물의 개인 정보와 연도별 발언이 노출되고 개인 정보를 편집 할 수 있습니다.
+
+- 로그인 한 회원은 인물을 팔로우 하여 해당 인물의 모든 발언을 모아볼 수 있습니다.
+
+  > - **관련 클래스**
+  >   - PersonApiController
+  >   - PersonService
+  >   - RemarkPersonPageQueryRepository:pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/remark/repository/RemarkPersonPageQueryRepository.java)
+  >   - PersonDetail.html :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/resources/templates/person/personDetail.html)
 
 
 
-### 4.3. Controller
+### 4.6. 인물 아이콘 등록 및 관리
 
+- 관리자는 카테고리별 프리셋 아이콘을 등록하여 인물 정보 편집시에 이를 선택하여 등록해 줄 수 있습니다. 아이콘은 AWS S3에 저장됩니다.
+
+- 카테고리별 아이콘을 등록, 수정, 삭제할 수 있고 인물 개별 아이콘을 따로 지정하여 등록 할 수 있습니다.
+
+  >  - **관련 클래스**
+  >    - IconApiController
+  >    - IconService :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/service/icon/IconService.java)
+  >    - IconApiQueryRepository
+  >    - AwsS3Config
+  >    - S3Uploader :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/S3Uploader.java)
+
+
+
+### 4.7. Oauth2.0 로그인 및 Spring Security 인증, 인가
+
+- 구글/네이버 Oauth2.0 로그인을 이용해 불필요한 회원 가입 절차 프로세스를 생략했습니다.
+
+- Security 설정을 통해 인증 또는 인가를 받은 회원만 특정 페이지 또는 API에 접근할 수 있도록 제한했습니다.
+
+- Custom Handler, Entry Point로 상황에 따른 추가 작업들을 작성했습니다.
+
+  > - **관련 클래스**
+  >   - WebSecurityConfig :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/WebSecurityConfig.java)
+  >   - CustomOAuth2UserService (OAuth2UserService Implements Class) :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/CustomOAuth2UserService.java)
+  >
+  >   - CustomAccessDeniedHandler:pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/auth/handler/CustomAccessDeniedHandler.java)
+  >
+  >   - CustomLoginSuccessHandler
+  >
+  >   - CustomLogoutSuccessHandler
+
+  
+
+### 4.7. 무중단 배포
+
+- **구조**
 ![](https://raw.githubusercontent.com/warscodev/portfolio/46244ff960fad61e943617769c98039e1083dff4/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A5%E1%86%BC.svg)
+- **과정**
 
-- **요청 처리** :pushpin: [코드 확인](https://github.com/Integerous/goQuality/blob/b2c5e60761b6308f14eebe98ccdb1949de6c4b99/src/main/java/goQuality/integerous/controller/PostRestController.java#L55)
-  - Controller에서는 요청을 화면단에서 넘어온 요청을 받고, Service 계층에 로직 처리를 위임합니다.
-
-- **결과 응답** :pushpin: [코드 확인]()
-  - Service 계층에서 넘어온 로직 처리 결과(메세지)를 화면단에 응답해줍니다.
-
-### 4.4. Service
-
-![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_service1.png)
-
-- **Http 프로토콜 추가 및 trim()** :pushpin: [코드 확인]()
-  - 사용자가 URL 입력 시 Http 프로토콜을 생략하거나 공백을 넣은 경우,  
-  올바른 URL이 될 수 있도록 Http 프로토콜을 추가해주고, 공백을 제거해줍니다.
-
-- **URL 접속 확인** :pushpin: [코드 확인]()
-  - 화면단에서 모양새만 확인한 URL이 실제 리소스로 연결되는지 HttpUrlConnection으로 테스트합니다.
-  - 이 때, 빠른 응답을 위해 Request Method를 GET이 아닌 HEAD를 사용했습니다.
-  - (HEAD 메소드는 GET 메소드의 응답 결과의 Body는 가져오지 않고, Header만 확인하기 때문에 GET 메소드에 비해 응답속도가 빠릅니다.)
-
-  ![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_service2.png)
-
-- **Jsoup 이미지, 제목 파싱** :pushpin: [코드 확인]()
-  - URL 접속 확인결과 유효하면 Jsoup을 사용해서 입력된 URL의 이미지와 제목을 파싱합니다.
-  - 이미지는 Open Graphic Tag를 우선적으로 파싱하고, 없을 경우 첫 번째 이미지와 제목을 파싱합니다.
-  - 컨텐츠에 이미지가 없을 경우, 미리 설정해둔 기본 이미지를 사용하고, 제목이 없을 경우 생략합니다.
-
-
-### 4.5. Repository
-
-![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_repo.png)
-
-- **컨텐츠 저장** :pushpin: [코드 확인]()
-  - URL 유효성 체크와 이미지, 제목 파싱이 끝난 컨텐츠는 DB에 저장합니다.
-  - 저장된 컨텐츠는 다시 Repository - Service - Controller를 거쳐 화면단에 송출됩니다.
+	- Github 마스터 브런치에서 푸시가 발생하면 Github Actions에서 프로젝트 빌드 후, Jar 파일로 압축하여 S3로 업로드 합니다.
+	- Github Actions은 CodeDeploy에게 S3로 전달된 Jar 파일을 이용한 배포를 요청합니다.
+	- EC2 인스턴스 내부에 있는 CodeDeploy Agent가 S3로 부터 Jar 파일을 전달받아 배포를 진행합니다.
+	  - 현재 Nginx와 연결되지 않은 포트의 스프링부트로 배포합니다.
+	-  배포와 헬스체크가 완료되면 Nginx reload를 통해 Nginx를 새로 배포된 스프링부트의 포트로 연결합니다.
+	
+	
+	
 
 </div>
 </details>
 
 </br>
 
-## 5. 핵심 트러블 슈팅
-### 5.1. 컨텐츠 필터와 페이징 처리 문제
-- 저는 이 서비스가 페이스북이나 인스타그램 처럼 가볍게, 자주 사용되길 바라는 마음으로 개발했습니다.  
-때문에 페이징 처리도 무한 스크롤을 적용했습니다.
-
-- 하지만 [무한스크롤, 페이징 혹은 “더보기” 버튼? 어떤 걸 써야할까](https://cyberx.tistory.com/82) 라는 글을 읽고 무한 스크롤의 단점들을 알게 되었고,  
-다양한 기준(카테고리, 사용자, 등록일, 인기도)의 게시물 필터 기능을 넣어서 이를 보완하고자 했습니다.
-
-- 그런데 게시물이 필터링 된 상태에서 무한 스크롤이 동작하면,  
-필터링 된 게시물들만 DB에 요청해야 하기 때문에 아래의 **기존 코드** 처럼 각 필터별로 다른 Query를 날려야 했습니다.
-
-<details>
-<summary><b>기존 코드</b></summary>
-<div markdown="1">
-
-~~~java
-/**
- * 게시물 Top10 (기준: 댓글 수 + 좋아요 수)
- * @return 인기순 상위 10개 게시물
- */
-public Page<PostResponseDto> listTopTen() {
-
-    PageRequest pageRequest = PageRequest.of(0, 10, Sort.Direction.DESC, "rankPoint", "likeCnt");
-    return postRepository.findAll(pageRequest).map(PostResponseDto::new);
-}
-
-/**
- * 게시물 필터 (Tag Name)
- * @param tagName 게시물 박스에서 클릭한 태그 이름
- * @param pageable 페이징 처리를 위한 객체
- * @return 해당 태그가 포함된 게시물 목록
- */
-public Page<PostResponseDto> listFilteredByTagName(String tagName, Pageable pageable) {
-
-    return postRepository.findAllByTagName(tagName, pageable).map(PostResponseDto::new);
-}
-
-// ... 게시물 필터 (Member) 생략 
-
-/**
- * 게시물 필터 (Date)
- * @param createdDate 게시물 박스에서 클릭한 날짜
- * @return 해당 날짜에 등록된 게시물 목록
- */
-public List<PostResponseDto> listFilteredByDate(String createdDate) {
-
-    // 등록일 00시부터 24시까지
-    LocalDateTime start = LocalDateTime.of(LocalDate.parse(createdDate), LocalTime.MIN);
-    LocalDateTime end = LocalDateTime.of(LocalDate.parse(createdDate), LocalTime.MAX);
-
-    return postRepository
-                    .findAllByCreatedAtBetween(start, end)
-                    .stream()
-                    .map(PostResponseDto::new)
-                    .collect(Collectors.toList());
-    }
-~~~
-
-</div>
-</details>
-
-- 이 때 카테고리(tag)로 게시물을 필터링 하는 경우,  
-각 게시물은 최대 3개까지의 카테고리(tag)를 가질 수 있어 해당 카테고리를 포함하는 모든 게시물을 질의해야 했기 때문에  
-- 아래 **개선된 코드**와 같이 QueryDSL을 사용하여 다소 복잡한 Query를 작성하면서도 페이징 처리를 할 수 있었습니다.
-
-<details>
-<summary><b>개선된 코드</b></summary>
-<div markdown="1">
-
-~~~java
-/**
- * 게시물 필터 (Tag Name)
- */
-@Override
-public Page<Post> findAllByTagName(String tagName, Pageable pageable) {
-
-    QueryResults<Post> results = queryFactory
-            .selectFrom(post)
-            .innerJoin(postTag)
-                .on(post.idx.eq(postTag.post.idx))
-            .innerJoin(tag)
-                .on(tag.idx.eq(postTag.tag.idx))
-            .where(tag.name.eq(tagName))
-            .orderBy(post.idx.desc())
-                .limit(pageable.getPageSize())
-                .offset(pageable.getOffset())
-            .fetchResults();
-
-    return new PageImpl<>(results.getResults(), pageable, results.getTotal());
-}
-~~~
-
-</div>
-</details>
-
-</br>
-
-## 6. 그 외 트러블 슈팅
+## 5. 트러블 슈팅
 <details>
 <summary>npm run dev 실행 오류</summary>
 <div markdown="1">
 
 - Webpack-dev-server 버전을 3.0.0으로 다운그레이드로 해결
 - `$ npm install —save-dev webpack-dev-server@3.0.0`
-
-</div>
-</details>
-
-<details>
-<summary>vue-devtools 크롬익스텐션 인식 오류 문제</summary>
-<div markdown="1">
-
-  - main.js 파일에 `Vue.config.devtools = true` 추가로 해결
-  - [https://github.com/vuejs/vue-devtools/issues/190](https://github.com/vuejs/vue-devtools/issues/190)
-
-</div>
-</details>
-
-<details>
-<summary>ElementUI input 박스에서 `v-on:keyup.enter="메소드명"`이 정상 작동 안하는 문제</summary>
-<div markdown="1">
-
-  - `v-on:keyup.enter.native=""` 와 같이 .native 추가로 해결
 
 </div>
 </details>
@@ -275,31 +225,19 @@ public Page<Post> findAllByTagName(String tagName, Pageable pageable) {
 </details>    
 
 <details>
-<summary> 태그 선택후 등록하기 누를 때 `object references an unsaved transient instance - save the transient instance before flushing` 오류</summary>
+<summary> JSON: Infinite recursion</summary>
 <div markdown="1">
 
-  - Post 엔티티의 @ManyToMany에 영속성 전이(cascade=CascadeType.ALL) 추가
-    - JPA에서 Entity를 저장할 때 연관된 모든 Entity는 영속상태여야 한다.
-    - CascadeType.PERSIST 옵션으로 부모와 자식 Enitity를 한 번에 영속화할 수 있다.
-    - 참고
-        - [https://stackoverflow.com/questions/2302802/object-references-an-unsaved-transient-instance-save-the-transient-instance-be/10680218](https://stackoverflow.com/questions/2302802/object-references-an-unsaved-transient-instance-save-the-transient-instance-be/10680218)
 
-</div>
-</details>    
+  - 서로 양방향 참조(1:N)를 하고 있는 Remark Entity, Person Entity중 Remark Entity를  JSON으로 반환하는 과정에서 Person Entity가 다시 Remark Entity를 불러오는 무한 순환참조 문제가 발생.
 
-<details>
-<summary> JSON: Infinite recursion (StackOverflowError)</summary>
-<div markdown="1">
+  - 양 Entity에 각각 @JsonManagedReference, @JsonBackReference을 붙여서 순환참조를 방어할 수도 있으나 Entity 자체를 반환하기 보다는 dto 객체를 만들어 필요한 필드들만 추출해 반환한다면 위 문제가 발생하지 않습니다. 
 
-  - @JsonIgnoreProperties 사용으로 해결
-    - 참고
-        - [http://springquay.blogspot.com/2016/01/new-approach-to-solve-json-recursive.html](http://springquay.blogspot.com/2016/01/new-approach-to-solve-json-recursive.html)
-        - [https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue](https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue)
-        
+    
 
 </div>
 </details>  
-    
+
 <details>
 <summary> H2 접속문제</summary>
 <div markdown="1">
@@ -308,20 +246,9 @@ public Page<Post> findAllByTagName(String tagName, Pageable pageable) {
         
 
 </div>
-</details> 
-    
-<details>
-<summary> 컨텐츠수정 모달창에서 태그 셀렉트박스 드랍다운이 뒤쪽에 보이는 문제</summary>
-<div markdown="1">
+</details> https://element.eleme.io/#/en-US/component/quickstart#global-config)
 
-   - ElementUI의 Global Config에 옵션 추가하면 해결
-     - main.js 파일에 `Vue.us(ElementUI, { zIndex: 9999 });` 옵션 추가(9999 이하면 안됌)
-   - 참고
-     - [https://element.eleme.io/#/en-US/component/quickstart#global-config](https://element.eleme.io/#/en-US/component/quickstart#global-config)
-       
 
-</div>
-</details> 
 
 <details>
 <summary> HTTP delete Request시 개발자도구의 XHR(XMLHttpRequest )에서 delete요청이 2번씩 찍히는 이유</summary>
@@ -396,18 +323,10 @@ public Page<Post> findAllByTagName(String tagName, Pageable pageable) {
 </div>
 </details> 
     
-<details>
-<summary> 랭킹 동점자 처리 문제</summary>
-<div markdown="1">
-
-  - PageRequest의 Sort부분에서 properties를 "rankPoint"를 주고 "likeCnt"를 줘서 댓글수보다 좋아요수가 우선순위 갖도록 설정.
-  - 좋아요 수도 똑같다면..........
-        
+    
 
 </div>
 </details> 
     
 </br>
-
-## 6. 회고 / 느낀점
 

@@ -9,7 +9,7 @@
 
 ## 1. 제작 기간 & 참여 인원
 - 2021년 5월 ~ 현재
-- 2인 팀 프로젝트이며 자바&스프링 프레임워크 기반의 풀 스택 웹 개발 업무를 총괄 담당했고,
+- 2인 팀 프로젝트이며 자바&스프링 프레임워크 기반의 풀 스택 웹 개발 업무를 총괄 담당했고 <br>
   전반적인 컨텐츠, 디자인 기획은 팀원과 공동으로 진행했습니다.
 
 </br>
@@ -42,13 +42,12 @@
 
 ## 3. ERD 설계
 
-![](https://github.com/warscodev/portfolio/blob/main/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/erd.png?raw=true)
+<img src='https://github.com/warscodev/portfolio/blob/main/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/erd.png?raw=true' width='800px'>
+
+<br>
 
 ## 4. 주요 기능
 
-<details>
-<summary><b>펼치기</b></summary>
-<div markdown="1">
 
 ### 4.1. 발언 등록
 
@@ -62,7 +61,9 @@
   >   - RemarkApiController :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/web/controller/remark/RemarkApiController.java)
   >   - RemarkService :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/service/remark/RemarkService.java)
 
-  
+
+
+<br>
 
 ### 4.2. 발언 목록 및 검색
 
@@ -84,6 +85,8 @@
 
 
 
+<br>
+
 ### 4.3. 댓글
 
 - 개별 발언 페이지에서 로그인 한 회원은 발언에 대한 좋아요/싫어요, 스크랩을 할 수 있고 댓글을 작성할 수 있습니다.
@@ -98,6 +101,8 @@
 
 
 
+<br>
+
 ### 4.4. 인물 분류 페이지
 
 - 카테고리별 대분류 및 초성별 소분류를 통해 사이트에 등록된 인물들의 통계 정보를 제공하고 <br>개별 인물 페이지로 이동 할 수 있는 인덱스의 역할을 합니다.
@@ -109,6 +114,9 @@
   >   - GetChoSungFromNames :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/domain/person/utils/GetChoSungFromNames.java)
   
   
+
+<br>
+
 ### 4.5. 인물 상세 페이지
 
 - 인물의 개인 정보와 연도별 발언이 노출되고 개인 정보를 편집 할 수 있습니다.
@@ -122,6 +130,8 @@
   >   - PersonDetail.html :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/resources/templates/person/personDetail.html)
 
 
+
+<br>
 
 ### 4.6. 인물 아이콘 등록 및 관리
 
@@ -137,6 +147,8 @@
   >    - S3Uploader :pushpin:[코드](https://github.com/warscodev/quot/blob/master/src/main/java/com/udpr/quot/config/S3Uploader.java)
 
 
+
+<br>
 
 ### 4.7. Oauth2.0 로그인 및 Spring Security 인증, 인가
 
@@ -156,25 +168,23 @@
   >
   >   - CustomLogoutSuccessHandler
 
-  
+
+
+<br>
+
 
 ### 4.7. 무중단 배포
 
-- **구조**
-![](https://raw.githubusercontent.com/warscodev/portfolio/46244ff960fad61e943617769c98039e1083dff4/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A5%E1%86%BC.svg)
-- **과정**
+ <img src='https://raw.githubusercontent.com/warscodev/portfolio/f480ac6dd858f414db18c9d4877d94fabf392c1e/%EC%BF%BC%ED%8A%B8%EC%9C%84%ED%82%A4/img/%E1%84%87%E1%85%A2%E1%84%91%E1%85%A9%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A5%E1%86%BC.svg?token=AKK3GOSMDSDCESOR4L2SJG3CPTRX6' width='800px'>
 
-	- Github 마스터 브런치에서 푸시가 발생하면 Github Actions에서 프로젝트 빌드 후, Jar 파일로 압축하여 S3로 업로드 합니다.
-	- Github Actions은 CodeDeploy에게 S3로 전달된 Jar 파일을 이용한 배포를 요청합니다.
-	- EC2 인스턴스 내부에 있는 CodeDeploy Agent가 S3로 부터 Jar 파일을 전달받아 배포를 진행합니다.
-	  - 현재 Nginx와 연결되지 않은 포트의 스프링부트로 배포합니다.
-	-  배포와 헬스체크가 완료되면 Nginx reload를 통해 Nginx를 새로 배포된 스프링부트의 포트로 연결합니다.
+- Github 마스터 브런치에서 푸시가 발생하면 Github Actions에서 프로젝트 빌드 후, Jar 파일로 압축하여 S3로 업로드 합니다.
+- Github Actions은 CodeDeploy에게 S3로 전달된 Jar 파일을 이용한 배포를 요청합니다.
+- EC2 인스턴스 내부에 있는 CodeDeploy Agent가 S3로 부터 Jar 파일을 전달받아 배포를 진행합니다.
+	- 현재 Nginx와 연결되지 않은 포트의 스프링부트로 배포합니다.
+-  배포와 헬스체크가 완료되면 Nginx reload를 통해 Nginx를 새로 배포된 스프링부트의 포트로 연결합니다.
 	
 	
 	
-
-</div>
-</details>
 
 </br>
 
